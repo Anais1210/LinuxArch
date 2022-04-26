@@ -1,11 +1,14 @@
-# Exercise 4
 # Create a script that allows you to install the Archlinux distribution. The script should be hosted on GitHub and fetched from a virtual machine that is running the latest version of Archlinux. The user should be able to customize the following:
 #
 # The size of the root partition (in percentage or hardcoded)
 # The size of the swap partition (in percentage or hardcoded)
 # The packages installed
+# The timezone
+# The locale
 # The console keymap
+# The hostname
 # The administrator
+# The users to add with their password
 
 timedatectl set-ntp true
 parted /dev/sda mklabel msdos
@@ -42,7 +45,7 @@ useradd -m -s /usr/bin/zsh $newUser
 echo "Mot de passe : " $newUser
 passwd $newUser
 
-#keymap
+#Keymap
 localectl list-keymaps
 read -p "Choose your keymap with the list above:" $keymap
 loadkeys $keymap
