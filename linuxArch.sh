@@ -35,18 +35,19 @@ echo $localName > /etc/locale.conf
 #Hostname
 read "Nom d'utilisateur" $hostname
 echo $hostname > /etc/hostname
-sed -i "/localhost/s/$/ $hostname/" /etc/hosts
-echo "root:${root_password}" | chpasswd
 
 #New users
-echo "Ajout d'utilisateur :" $newUser
+echo "Ajout d'un nouveau utilisateur :" $newUser
 useradd -m -s /usr/bin/zsh $newUser
 echo "Mot de passe : " $newUser
 passwd $newUser
 
-touch /etc/hosts
+#keymap
+localectl list-keymaps
+read -p "Choose your keymap with the list above:" $keymap
+loadkeys $keymap
+
 systemctl enable dhcpcd
-passwd
 pacman -S grub os-prober
 grub-install /dev/sdX
 grub-mkconfig -o /boot/grub/grub.cfg
